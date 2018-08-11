@@ -1,12 +1,12 @@
 import maya.cmds as mc
 
-def makeSolidJoint(currentJoint):    
+def makePrimitiveJoint(currentJoint):    
     SJsize = mc.jointDisplayScale(q=True) * SS_scale
     children = mc.listRelatives(currentJoint, c=True)    
     if (children != None) : 
         for node in children :
             if(mc.nodeType(node) == "joint") :
-                makeSolidJoint(node)
+                makePrimitivesJoint(node)
             else :
                 SJballEndName = currentJoint + SS_group + "_SJballEnd"        
                 solidEndBall = mc.sphere(n=SJballEndName)
@@ -69,14 +69,14 @@ def createMDN(objName, objType) :
         mc.connectAttr(SS_multiply+'.outputX', objName[0]+'.scaleZ')        
         mc.connectAttr(SS_multiply+'.outputZ', coneShapeNode[0]+'.sections') 
 
-class solidSkeletonUI() :
-    def __init__(self, winName = "solidSkeletonUI") :
-        self.winTitle = "Solid Skeleton by CIMPLE"
+class PrimitiveSkeletonUI() :
+    def __init__(self, winName = "PrimitiveSkeletonUI") :
+        self.winTitle = "Primitive Skeleton by CIMPLE"
         self.winName = winName
         self.SS_MDNlist = []    
         
     def makeSS(self, arg=None):        
-        self.makeSolidSkeleton()
+        self.makePrimitiveSkeleton()
         return
     
     def doNothing(self, arg=None):
@@ -97,7 +97,7 @@ class solidSkeletonUI() :
         mc.setAttr(SS_scaleCtr+".input1Z", edgeDivide)
         return
 
-    def makeSolidSkeleton(self, ballScale=1.0, edgeScale=1.0) :        
+    def makePrimitiveSkeleton(self, ballScale=1.0, edgeScale=1.0) :        
         global SS_group
         global SS_root_jnt
         global SS_scale
@@ -112,17 +112,17 @@ class solidSkeletonUI() :
         
         SS_scale = ballScale
         SS_edgeScale = edgeScale      
-        if len(mc.ls("SolidSkeleton")) != 0 :              
-            SS_group = "SolidSkeleton"
+        if len(mc.ls("PrimitiveSkeleton")) != 0 :              
+            SS_group = "PrimitiveSkeleton"
         else :            
-            SS_group = mc.group(empty=True, name="SolidSkeleton")
+            SS_group = mc.group(empty=True, name="PrimitiveSkeleton")
             del self.SS_MDNlist
             self.SS_MDNlist = []
         SS_scaleCtr = SS_group + '_scaleCtr'
         for ss_node in selection :
             if (mc.nodeType(ss_node) == "joint") :
                 SS_root_jnt = ss_node                
-                makeSolidJoint(ss_node)
+                makePrimitiveJoint(ss_node)
         if len(mc.ls(SS_scaleCtr)) == 0 :
             mc.createNode('multiplyDivide', n=SS_scaleCtr)
             mc.setAttr(SS_scaleCtr + ".input1X", 1)
@@ -169,13 +169,16 @@ class solidSkeletonUI() :
         mc.text(label = '3.', align = 'center')
         mc.text(label = 'edit')        
         mc.text(label = 'Ball Size', align = 'right')      
-        self.ballSizeSlider = mc.floatSliderGrp(field=True, value = 1.0, minValue = 0.0, maxValue = 10, fieldMinValue = -10, fieldMaxValue = 100, 
+        self.ballSizeSlider = mc.floatSliderGrp(field=True, value = 1.0, minValue = 0.0, maxValue = 10, fieldMinValue = -10, fieldMaxValue = 100, 
+
 columnWidth = [(1,30), (2,110)], pre=2, dc=self.changeBallScale, cc=self.doNothing)
         mc.text(label = 'Edge Size', align = 'right')      
-        self.edgeSizeSlider = mc.floatSliderGrp(field=True, value = 1.0, minValue = 0.0, maxValue = 10, fieldMinValue = -10, fieldMaxValue = 100, 
+        self.edgeSizeSlider = mc.floatSliderGrp(field=True, value = 1.0, minValue = 0.0, maxValue = 10, fieldMinValue = -10, fieldMaxValue = 100, 
+
 columnWidth = [(1,30), (2,110)], pre=2, dc=self.changeEdgeScale, cc=self.doNothing)
         mc.text(label = 'Edge Divide', align = 'right')
-        self.edgeDivideSlider = mc.intSliderGrp( field=True, minValue=3, maxValue=100, value=8, columnWidth = [(1,30), (2,110)], dc=self.changeEdgeDivide, 
+        self.edgeDivideSlider = mc.intSliderGrp( field=True, minValue=3, maxValue=100, value=8, columnWidth = [(1,30), (2,110)], dc=self.changeEdgeDivide, 
+
 cc=self.doNothing) 
         mc.text(" ")        
         mc.text(" ")
@@ -185,4 +188,4 @@ cc=self.doNothing)
     
         
 #create UI
-solidSkeletonUI().create()
+PrimitiveSkeletonUI().create()
