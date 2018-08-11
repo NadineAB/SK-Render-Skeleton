@@ -6,7 +6,7 @@ def makePrimitiveJoint(currentJoint):
     if (children != None) : 
         for node in children :
             if(mc.nodeType(node) == "joint") :
-                makePrimitivesJoint(node)
+                makePrimitiveJoint(node)
             else :
                 SJballEndName = currentJoint + SS_group + "_SJballEnd"        
                 solidEndBall = mc.sphere(n=SJballEndName)
@@ -71,7 +71,7 @@ def createMDN(objName, objType) :
 
 class PrimitiveSkeletonUI() :
     def __init__(self, winName = "PrimitiveSkeletonUI") :
-        self.winTitle = "Primitive Skeleton by CIMPLE"
+        self.winTitle = "Primitive Skeleton"
         self.winName = winName
         self.SS_MDNlist = []    
         
