@@ -1,3 +1,6 @@
+'''
+Tool allows to convert the skeleton or a set of joints to set sphere and cone primitives   
+'''
 import maya.cmds as mc
 
 def makePrimitiveJoint(currentJoint):    
