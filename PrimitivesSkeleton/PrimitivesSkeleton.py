@@ -1,5 +1,6 @@
 '''
-Tool allows to convert the skeleton or a set of joints to set sphere and cone primitives   
+Tool allows to convert the skeleton or a set of joints to set sphere and cone primitives 
+Select the root joint then run the script in the script editor
 '''
 import maya.cmds as mc
 
