@@ -1,7 +1,7 @@
 '''
 Tool allows to convert the skeleton or a set of joints to set sphere and cone primitives 
 Select the root joint then run the script in the MEL/python command editor.
-This allows rendering the skeleton using solid spheres
+This allows rendering the skeleton using solid spheres.
 '''
 import maya.cmds as mc
 
