@@ -166,7 +166,7 @@ class PrimitiveSkeletonUI() :
         mc.frameLayout( labelVisible=False, borderStyle='etchedOut', width=300 )
         mc.columnLayout(adjustableColumn=True, columnAttach=('both', 7))
         mc.rowColumnLayout(numberOfColumns=2, columnWidth=[(1,90),(2,200)])        
-        mc.text(" ")        
+        mc.text(" !!tekst ")        
         mc.text(" ")
         mc.text(label = '1.', align = 'center')
         mc.text(label = 'Choose the root joint')       
